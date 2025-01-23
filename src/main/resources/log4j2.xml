@@ -7,7 +7,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="info">
+        <Root level="trace"> <!--  changed info to trace for now to allow all levels of log-->
             <AppenderRef ref="console" />
         </Root>
     </Loggers>
