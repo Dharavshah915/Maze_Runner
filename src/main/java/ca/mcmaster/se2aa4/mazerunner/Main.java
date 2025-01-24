@@ -26,6 +26,7 @@ public class Main {
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd ;
+
         
         try {
             cmd = parser.parse(options, args);
@@ -35,7 +36,6 @@ public class Main {
                 logger.error("No maze file path provided. Please specify -i option with a valid file path.");
                 return; // Exit if no file path
             }
-            
             logger.info("**** Reading the maze from file " + inputFilePath);
             BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
             String line;
@@ -59,7 +59,29 @@ public class Main {
             logger.error(e);
         }
         logger.info("**** Computing path");
-        logger.info("PATH NOT COMPUTED");
+        try {
+            cmd = parser.parse(options, args);
+            String inputFilePath = cmd.getOptionValue("i");
+            Maze maze = new Maze(inputFilePath);
+            Player explorer = new Player(maze);
+            Algorithm algorithm = new Algorithm(maze);
+            Integer steps = 0;
+            maze.displayMaze();
+            logger.trace(maze.getStartX());
+            logger.trace(maze.getStartY());
+            logger.trace(maze.getEndX());
+            logger.trace(maze.getEndY());
+            while(explorer.doneMaze != true && steps < 10){
+                explorer.followMove(algorithm.findNextMove());
+                steps += 1;
+            }
+            System.out.println(steps);
+            System.out.println(explorer.path);
+        } catch (Exception e) {
+            System.out.println(e);
+            logger.info("PATH NOT COMPUTED");
+        }
+    
         logger.info("** End of MazeRunner");
     }
 }
