@@ -32,13 +32,14 @@ public class Main {
             String inputFilePath = cmd.getOptionValue("i");
 
             if (inputFilePath == null || inputFilePath.isEmpty()) {
-                logger.error("No maze file path provided. Please specify the -i option with a valid file path.");
+                logger.error("No maze file path provided. Please specify -i option with a valid file path.");
                 return; // Exit if no file path
             }
             
             logger.info("**** Reading the maze from file " + inputFilePath);
             BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
             String line;
+
             StringBuilder myTraceLogs = new StringBuilder();
             while ((line = reader.readLine()) != null) {
                 myTraceLogs.setLength(0);
