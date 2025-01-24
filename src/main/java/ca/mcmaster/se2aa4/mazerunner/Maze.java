@@ -61,13 +61,17 @@ public class Maze {
 
     public void get_start_end_indexs(String filePath){
         for (int row = 0; row < height; row++){
-            if (grid[row][0] == ' '){
-                startX = row;
-                startY = 0;
+            System.out.println(grid[row][0]);
+            System.out.println(row  + "row num");
+            if (grid[row][0] != '#'){
+                System.out.println("here");
+                startX = 0;
+                startY = row;
+                System.out.println(startY + "Start y");
             }
-            if (grid[row][width-1] == ' '){
-                endX = row;
-                endY = width - 1;
+            if (grid[row][width-1] != '#'){
+                endX = width -1;
+                endY = row;
             }
         }
     }
