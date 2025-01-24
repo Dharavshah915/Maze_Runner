@@ -1,11 +1,11 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 public class Player {
-    private int x, y;    // Player's position
+    public int x, y;    // Player's position
     private int direction; // 0 = Up, 1 = Right, 2 = Down, 3 = Left
     public String path = "";
-    protected final int[] dx = {-1, 0, 1, 0}; // x-direction changes for Up, Right, Down, Left
-    protected final int[] dy = {0, 1, 0, -1};
+    protected final int[] dy = {-1, 0, 1, 0}; // x-direction changes for Up, Right, Down, Left
+    protected final int[] dx = {0, 1, 0, -1};
     public boolean doneMaze = false;
 
 
@@ -38,19 +38,24 @@ public class Player {
         x += dx[direction];
         y += dy[direction];
         path += "F";
+        isAtEnd();
     }
 
     private void turnLeft() {
         direction = (direction + 3) % 4; // Turn counter-clockwise
         path += "L";
+        isAtEnd();
     }
 
     private void turnRight() {
         direction = (direction + 1) % 4; // Turn clockwise
         path += "R";
+        isAtEnd();
     }
 
     public void isAtEnd() {
-        doneMaze = true;
+        if (x == maze.getEndX() && y == maze.getEndY()){
+            doneMaze = true;
+        }
     }
 }
