@@ -28,8 +28,8 @@ public abstract class Algorithm extends Compass {
 
 
     public boolean validatePath(String path){
-      for(char dir: path.trim().toCharArray()){
-          switch (dir) {
+        for(char dir: path.trim().toCharArray()){
+            switch (dir) {
 
             case 'F':
                 currentX += dx[currentDirection];
@@ -52,11 +52,11 @@ public abstract class Algorithm extends Compass {
         
             default:
                 return false;
-          }
-      }
-      return MazeUtils.isSolved(maze,currentX, currentY);
+            }
     }
-    
+    return MazeUtils.isSolved(maze,currentX, currentY);
+    }
+
     public abstract ArrayList<String> findPath();
 
     

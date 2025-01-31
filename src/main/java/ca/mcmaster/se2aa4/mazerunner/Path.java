@@ -16,7 +16,7 @@ public class Path {
         this.pathway += str;
     }
 
-    public String CanonicalToFactorized(){
+    public void CanonicalToFactorized(){
         String sections[] = this.pathway.split(" ");
         String factorizedpath = "";
         for (String section : sections){
@@ -30,7 +30,33 @@ public class Path {
             factorizedpath += " ";
              // Start counting the first character in the section
         }
-        return factorizedpath.trim();
+        this.pathway = factorizedpath.trim();
+    }
+
+    public void factorizedtoCanonical(){
+        String sections[] = this.pathway.split(" ");
+        String canonical = "";
+        for (String section : sections){
+            boolean hasDigit = section.substring(0, 1).matches("\\d");
+            
+           
+            String dir = section.substring(section.length()-1,section.length());
+            if (hasDigit){
+                
+                System.out.println(dir + "dir");
+                String number = section.substring(0,section.length()-1);
+                System.out.println(number + "num");
+                for(int i = 0; i< Integer.parseInt(number); i++){
+                    canonical += dir;
+                }
+            }else{
+                //String dir = section.substring(0,1);
+                canonical += dir;
+            }
+            canonical += " ";
+        }
+        this.pathway = canonical;
+
     }
     @Override
     public String toString() {

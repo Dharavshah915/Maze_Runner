@@ -19,6 +19,10 @@ public class Player {
         //this.y = maze.getStartY();
     }
 
+    public Player(Path path){
+        this.path = path;
+    }
+
     // public void followMove(String move) {
     //         switch (move) {
     //             case "F":
@@ -75,7 +79,11 @@ public class Player {
         this.path.pathway = String.join("", this.stratagy.findPath());
     }
 
-    public boolean verrify(String path){
-        return(this.stratagy.validatePath(path));
+    // public boolean verrify(String path){
+    //     return(this.stratagy.validatePath(path));
+    // }
+
+    public void setPath(String path){
+        this.path.pathway = path;
     }
 }

@@ -58,20 +58,28 @@ public class Main {
                 //String inputFilePath = cmd.getOptionValue("i");
                 Maze maze = new Maze(inputFilePath);
                 System.out.println("maze got");
-                Player explorer = new Player();
                 int startDirection = 1;
-                Algorithm algorithm = new RHRAlgorithm(maze,startDirection);
-                explorer.get_Stratagy(algorithm);
+                
+            
                 if (cmd.hasOption("p")){
-                    boolean correctPath = explorer.verrify(cmd.getOptionValue("p"));
+                    String route = cmd.getOptionValue("p");
+                    Path path = new Path(route);
+                    Player explorer = new Player(path);
+                    PathValidation validator = new PathValidation(maze, startDirection, explorer.path);
+                    boolean correctPath = validator.validatePath();
+                    //boolean correctPath = explorer.verrify(cmd.getOptionValue("p"));
                     logger.info(correctPath);
                 }else{
+                    Player explorer = new Player();
+                    Algorithm algorithm = new RHRAlgorithm(maze,startDirection);
+                    explorer.get_Stratagy(algorithm);
                     logger.trace(maze.getStartX());
                     logger.trace(maze.getStartY());
                     logger.trace(maze.getEndX());
                     logger.trace(maze.getEndY());
                     explorer.get_path();
-                    logger.info(explorer.path.CanonicalToFactorized());
+                    explorer.path.CanonicalToFactorized();
+                    logger.info(explorer.path);
                 }
             
             } catch (Exception e) {
