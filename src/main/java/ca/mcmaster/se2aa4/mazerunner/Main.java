@@ -16,6 +16,7 @@ public class Main {
 
     public static void main(String[] args) { 
         logger.info("Starting Maze Runner");
+        
 
         Options options = new Options();
         options.addOption("i", true, "maze file");
@@ -49,41 +50,37 @@ public class Main {
                     
                 }
                 logger.trace(myTraceLogs.toString().trim());
-                //System.out.print(System.lineSeparator());
             }
+ //----------------------------------------------------------------------------------
 
             logger.info("**** Computing path");
             try {
                 cmd = parser.parse(options, args);
-                //String inputFilePath = cmd.getOptionValue("i");
-                Maze maze = new Maze(inputFilePath);
-                System.out.println("maze got");
-                int startDirection = 1;
+                Maze maze = new Maze(inputFilePath); //initilaize maze
+                // IMPORTANT
+                int startDirection = 1; //change as needed 1 = start from West side, 3 = start from East for side maze solving
                 
-            
-                if (cmd.hasOption("p")){
-                    String route = cmd.getOptionValue("p");
-                    Path path = new Path(route);
-                    Player explorer = new Player(path);
-                    PathValidation validator = new PathValidation(maze, startDirection, explorer.path);
-                    boolean correctPath = validator.validatePath();
-                    //boolean correctPath = explorer.verrify(cmd.getOptionValue("p"));
-                    logger.info(correctPath);
+                if (cmd.hasOption("p")){ //path is provided and validation of path needs to be performed
+                    String route = cmd.getOptionValue("p"); //get route from input
+                    Path path = new Path(route); //initialize path
+                    Player explorer = new Player(path); //initalize player with path
+                    PathValidation validator = new PathValidation(maze, explorer.getPath()); //Initilize path validiator
+                    boolean isCorrectPathFromRight = validator.validatePath(1); //check if path is valid from left side
+                    boolean isCorrectPathFromLeft = validator.validateCanonicalPath(3); //chekc if path is valid from right side
+                    System.out.println(isCorrectPathFromLeft || isCorrectPathFromRight ? "That is a valid path" : "That path is not valid");
+
                 }else{
-                    Player explorer = new Player();
-                    Algorithm algorithm = new RHRAlgorithm(maze,startDirection);
-                    explorer.get_Stratagy(algorithm);
-                    logger.trace(maze.getStartX());
-                    logger.trace(maze.getStartY());
-                    logger.trace(maze.getEndX());
-                    logger.trace(maze.getEndY());
-                    explorer.get_path();
-                    explorer.path.CanonicalToFactorized();
-                    logger.info(explorer.path);
+                    Player explorer = new Player(); //initialize player with empty path
+                    Algorithm algorithm = new RHRAlgorithm(maze,startDirection); //choose algorithum of choice and initialize
+                    explorer.get_Stratagy(algorithm); //provide algorithum to player
+                    explorer.calculate_path(); //calculate path from maze
+                    explorer.getPath().CanonicalToFactorized(); //change to factorized form
+                    System.out.println(explorer.getPath()); //output
+                    
                 }
             
             } catch (Exception e) {
-                System.out.println(e);
+                logger.info(e);
                 logger.info("PATH NOT COMPUTED");
             }
 

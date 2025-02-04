@@ -16,34 +16,32 @@ public class Maze {
     private int endX;        // Ending point X-coordinate
     private int endY;        // Ending point Y-coordinate
 
-    // Constructor: loads the maze from a file
-    public Maze(String filePath) {
+    public Maze(String filePath) { //initliaze maze using file
         load_info(filePath);
     }
 
-    // Loads the maze from a file
-    private void load_info(String filePath) {
+    
+    private void load_info(String filePath) { // Loads the maze from a file
         try {
             get_dimensions(filePath);  // Get dimensions first
             grid = new Cell[height][width];  // Initialize the grid with the correct size
-            load_maze_to_array(filePath);    // Then, load the maze into the grid
+            load_maze_to_array(filePath);    // load maze to grid
             get_start_end_indexs(filePath);  // Get start and end points
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    // Get the dimensions of the maze (width and height)
-    public void get_dimensions(String filePath) throws IOException {
+    public void get_dimensions(String filePath) throws IOException { // Get the dimensions of the maze
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
-
-        // First pass to get height and width
+        
         while ((line = reader.readLine()) != null) {
-            width = Math.max(width, line.length());  // Update width
+            width = line.length(); //get the width
             height++;  // Increase the height for each line
         }
-        reader.close();  // Close the reader after getting the height and width
+
+        reader.close();
     }
 
     // Load the maze from a file into the grid (creating Cell objects)
@@ -54,15 +52,15 @@ public class Maze {
         while ((line = reader.readLine()) != null) {
             if (line.trim().isEmpty()) { // If the line is empty, treat it as a path
                 for (int col = 0; col < width; col++) {
-                    grid[row][col] = new Cell(State.PASS, row, col);  // Set path for each column
+                    grid[row][col] = new Cell(State.PASS);  // Set path for each column
                 }
             } else {
                 // Otherwise, process the normal maze line
                 for (int col = 0; col < line.length(); col++) {
                     if (line.charAt(col) == '#') {
-                        grid[row][col] = new Cell(State.WALL, row, col);  // Wall is '#'
+                        grid[row][col] = new Cell(State.WALL);  // Wall is '#'
                     } else {
-                        grid[row][col] = new Cell(State.PASS, row, col);  // Path is ' '
+                        grid[row][col] = new Cell(State.PASS);  // Path is ' '
                     }
                 }
             }
@@ -75,11 +73,11 @@ public class Maze {
     // Get the start and end positions from the grid
     public void get_start_end_indexs(String filePath) {
         for (int row = 0; row < height; row++) {
-            if (grid[row][0].getState() == State.PASS) {
+            if (grid[row][0].getState() == State.PASS) { //search for PASS cell in first col
                 startX = 0;
                 startY = row;
             }
-            if (grid[row][width - 1].getState() == State.PASS) {
+            if (grid[row][width - 1].getState() == State.PASS) { //seaerch for PASS cell in last col
                 endX = width - 1;
                 endY = row;
             }
@@ -103,7 +101,7 @@ public class Maze {
     public int getEndY() {
         return endY;
     }
-
+    //get dimensions
     public int getHeight() {
         return height;
     }
@@ -111,43 +109,22 @@ public class Maze {
     public int getWidth() {
         return width;
     }
-
+    //get end and start coords
+    public void setEndY(int Endy){
+        this.endY = Endy;
+    }
+    public void setEndX(int EndX){
+        this.endY = EndX;
+    }
+    public void setStartY(int Starty){
+        this.endY = Starty;
+    }
+    public void setStartX(int StartX){
+        this.endY = StartX;
+    }
+    
+    //get grid
     public Cell[][] getGrid(){
         return grid;
     }
-
-    // Get the state of a specific cell
-    // public State getCellState(int x, int y) {
-    //     if (x >= 0 && x < width && y >= 0 && y < height) {
-    //         return grid[y][x].getState();
-    //     }
-    //     return null;
-    // }
-
-    // // Check if a move is valid (i.e., within the maze boundaries and not a wall)
-    // public boolean isValidMove(int x, int y) {
-    //     if (x < 0 || x >= width || y < 0 || y >= height) {
-    //         return false;  // Out of bounds
-    //     }
-    //     return grid[y][x].getState() == State.PASS;  // Wall is represented by '#'
-    // }
-
-    // // Display the maze (for debugging purposes)
-    // public void displayMaze() {
-    //     for (int y = 0; y < height; y++) {
-    //         for (int x = 0; x < width; x++) {
-    //             if (grid[y][x] == null) {
-    //                 System.out.print("null");
-    //             } else {
-    //                 System.out.print(grid[y][x].getState() == State.WALL ? "#" : " ");
-    //             }
-    //         }
-    //         System.out.println();
-    //     }
-    // }
-
-    // // Method to check if the maze is solved (if the player reaches the end)
-    // public boolean isSolved(int x, int y) {
-    //     return x == endX && y == endY;
-    // }
 }

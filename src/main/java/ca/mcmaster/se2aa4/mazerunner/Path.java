@@ -1,56 +1,50 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 public class Path {
-    String pathway = "";
+    String pathway; //path represented using
    
     public Path(String path){
         this.pathway = path;
 
     }
 
-    public Path(){
-        
+    public Path(){  // overloadng to allow no initial path
+      this.pathway = "";
     }
 
-    public void add(String str){
+    public void add(String str){ //add to path
         this.pathway += str;
     }
 
-    public void CanonicalToFactorized(){
-        String sections[] = this.pathway.split(" ");
-        String factorizedpath = "";
+    public void CanonicalToFactorized(){ //turn Canonical path to Factorized
+        String sections[] = this.pathway.split(" "); //split into array from all spaces
+        String factorizedpath = ""; 
         for (String section : sections){
             Integer count = section.length();
-            if (count == 1){
+            if (count == 1){ //if the length of the section is only 1 no number needed
                 factorizedpath+=section;
-            }else{
+            }else{ //if not include the count of the dimension and the dimension
                 factorizedpath+= count.toString();
                 factorizedpath+= String.valueOf(section.charAt(0));
             }
             factorizedpath += " ";
-             // Start counting the first character in the section
         }
         this.pathway = factorizedpath.trim();
     }
 
-    public void factorizedtoCanonical(){
-        String sections[] = this.pathway.split(" ");
+    public void factorizedtoCanonical(){ //turn factorized to canonical
+        String sections[] = this.pathway.split(" "); //split into array from all spaces
         String canonical = "";
         for (String section : sections){
-            boolean hasDigit = section.substring(0, 1).matches("\\d");
+            boolean hasDigit = section.substring(0, 1).matches("\\d"); 
+            String dir = section.substring(section.length()-1,section.length()); //get the letter representing direction
+            if (hasDigit){ //if there is a digit in the section
             
-           
-            String dir = section.substring(section.length()-1,section.length());
-            if (hasDigit){
-                
-                System.out.println(dir + "dir");
-                String number = section.substring(0,section.length()-1);
-                System.out.println(number + "num");
-                for(int i = 0; i< Integer.parseInt(number); i++){
+                String number = section.substring(0,section.length()-1); //get the number
+                for(int i = 0; i< Integer.parseInt(number); i++){ //add the letter, number times
                     canonical += dir;
                 }
             }else{
-                //String dir = section.substring(0,1);
                 canonical += dir;
             }
             canonical += " ";
@@ -59,7 +53,7 @@ public class Path {
 
     }
     @Override
-    public String toString() {
+    public String toString() { //override toString method
         return pathway;
     }
 
