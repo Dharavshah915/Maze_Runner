@@ -56,22 +56,26 @@ public class Main {
             logger.info("**** Computing path");
             try {
                 cmd = parser.parse(options, args);
-                Maze maze = new Maze(inputFilePath); //initilaize maze
+                Maze maze = Maze.getInstance(inputFilePath); //initilaize maze
                 // IMPORTANT
-                Compass compass = new Compass(1); //initialize compass
+                Compass compass = Compass.getInstance(); //initialize compass
+                compass.setCurrentDirection(1); //set compass direction to 1 (West) by default
                 // int startDirection = 1; //change as needed 1 = start from West side, 3 = start from East for side maze solving
                 
                 if (cmd.hasOption("p")){ //path is provided and validation of path needs to be performed
                     String route = cmd.getOptionValue("p"); //get route from input
-                    Path path = new Path(route); //initialize path
-                    Player explorer = new Player(path); //initalize player with path
-                    PathValidation validator = new PathValidation(maze, explorer.getPath()); //Initilize path validiator
+                    Path path = Path.getInstance(); //get instance of path
+                    path.setPath(route); //set path
+                   // Path path = new Path(route); //initialize path
+                    Player explorer = Player.getInstance(); //initalize player with path
+                    PathValidation validator = PathValidation.getInstance(); //Initilize path validiator
+                    validator.setMazeAndPath(maze, path); //set maze and path for validation
                     boolean isCorrectPathFromRight = validator.validatePath(1); //check if path is valid from left side
                     boolean isCorrectPathFromLeft = validator.validateCanonicalPath(3); //chekc if path is valid from right side
                     System.out.println(isCorrectPathFromLeft || isCorrectPathFromRight ? "That is a valid path" : "That path is not valid");
 
                 }else{
-                    Player explorer = new Player(); //initialize player with empty path
+                    Player explorer = Player.getInstance(); //initialize player with empty path
                     Algorithm algorithm = new RHRAlgorithm(maze,compass); //choose algorithum of choice and initialize
                     explorer.get_Stratagy(algorithm); //provide algorithum to player
                     explorer.calculate_path(); //calculate path from maze

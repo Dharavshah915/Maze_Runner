@@ -2,15 +2,23 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class Path {
     String pathway; //path represented using
+    public static Path instance; //singleton instance
    
-    public Path(String path){
-        this.pathway = path;
-
-    }
-
-    public Path(){  // overloadng to allow no initial path
+    private Path(){
       this.pathway = "";
+
     }
+
+    public static Path getInstance(){ //get instance of path
+        if(instance == null){ //if instance is not initialized
+            instance = new Path(); //initialize instance
+        }
+        return instance; //return instance
+    }
+
+    // public Path(){  // overloadng to allow no initial path
+    //   this.pathway = "";
+    // }
 
     public void add(String str){ //add to path
         this.pathway += str;
@@ -55,6 +63,10 @@ public class Path {
     @Override
     public String toString() { //override toString method
         return pathway;
+    }
+
+    public void setPath(String path){ //set path
+        this.pathway = path;
     }
 
 

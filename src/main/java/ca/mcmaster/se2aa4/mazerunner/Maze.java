@@ -18,9 +18,34 @@ public class Maze {
     // private int endX;        // Ending point X-coordinate
     // private int endY;        // Ending point Y-coordinate
 
-    public Maze(String filePath) { //initliaze maze using file
+  // private static Compass compass;
+    //  //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
+    // private Compass(int startDirection){ //initialize with start direction
+    //     this.currentDirection = startDirection;
+    // }
+    // public static Compass getInstance(int startDirection){ //get instance of compass
+    //     if(compass == null){ //if compass is not initialized
+    //         compass = new Compass(startDirection); //initialize compass
+    //     }
+    //     return compass; //return compass
+    // }
+    
+    // public Compass(){ //overlaod constructor to allow comppass intialization without Startdirection pre determined
+
+    // }
+    private static Maze maze;
+
+    private Maze(String filePath) { //initliaze maze using file
         load_info(filePath);
     }
+
+    public static Maze getInstance(String filePath) { //get instance of maze
+        if (maze == null) { //if maze is not initialized
+            maze = new Maze(filePath); //initialize maze
+        }
+        return maze; //return maze
+    }
+  
 
     
     private void load_info(String filePath) { // Loads the maze from a file

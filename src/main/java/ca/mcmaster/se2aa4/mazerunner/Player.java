@@ -3,20 +3,26 @@ package ca.mcmaster.se2aa4.mazerunner;
 public class Player {
     private Path path; 
     private Algorithm stratagy; //algorithum to develop path 
-
-    public Player() { //initialize player with empty path
-        this.path = new Path();
+    public static Player instance;
+    private Player() { //initialize player with empty path
+        this.path = Path.getInstance();
  
+    }
+    public static Player getInstance() { //get instance of player
+        if(instance == null){ //if instance is not initialized
+            instance = new Player(); //initialize instance
+        }
+        return instance; //return instance
     }
     //Overloading
 
-    public Player(Path path){ //intialize with given Path object
-        this.path = path;
-    }
+    // public Player(Path path){ //intialize with given Path object
+    //     this.path = path;
+    // }
 
-    public Player(String path){ //intialize with Path represented as String
-        this.path = new Path(path);
-    }
+    // public Player(String path){ //intialize with Path represented as String
+    //     this.path = new Path(path);
+    // }
 
 
     public void get_Stratagy(Algorithm algorithm){ //get algorithum

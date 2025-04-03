@@ -5,24 +5,24 @@ public class Compass {
 
      // x-direction changes for going forward when facing: North, East, South, West
     protected int currentDirection; //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
-    public Compass(int startDirection){ //initialize with start direction
-        this.currentDirection = startDirection;
-    }
-    public Compass(){ //overlaod constructor to allow comppass intialization without Startdirection pre determined
-
-    }
-
-    // private static Compass compass;
-    //  //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
-    // private Compass(int startDirection){ //initialize with start direction
+    // public Compass(int startDirection){ //initialize with start direction
     //     this.currentDirection = startDirection;
     // }
-    // public static Compass getInstance(int startDirection){ //get instance of compass
-    //     if(compass == null){ //if compass is not initialized
-    //         compass = new Compass(startDirection); //initialize compass
-    //     }
-    //     return compass; //return compass
+    // public Compass(){ //overlaod constructor to allow comppass intialization without Startdirection pre determined
+
     // }
+
+    private static Compass compass = new Compass(); //initialize compass with default direction
+     //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
+    private Compass(){ //initialize with start direction
+        
+    }
+    public static Compass getInstance(){ //get instance of compass
+        if(compass == null){ //if compass is not initialized
+            compass = new Compass(); //initialize compass
+        }
+        return compass; //return compass
+    }
     
     // public Compass(){ //overlaod constructor to allow comppass intialization without Startdirection pre determined
 
