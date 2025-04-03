@@ -11,10 +11,12 @@ public class Maze {
     private Cell[][] grid;  // 2D array to represent the maze
     private int width = 0;   // Maze width (number of columns)
     private int height = 0;  // Maze height (number of rows)
-    private int startX;      // Starting point X-coordinate
-    private int startY;      // Starting point Y-coordinate
-    private int endX;        // Ending point X-coordinate
-    private int endY;        // Ending point Y-coordinate
+    private Coordinate start; // Starting coordinate
+    private Coordinate end;   // Ending coordinate
+    // private int startX;      // Starting point X-coordinate
+    // private int startY;      // Starting point Y-coordinate
+    // private int endX;        // Ending point X-coordinate
+    // private int endY;        // Ending point Y-coordinate
 
     public Maze(String filePath) { //initliaze maze using file
         load_info(filePath);
@@ -74,32 +76,41 @@ public class Maze {
     public void get_start_end_indexs(String filePath) {
         for (int row = 0; row < height; row++) {
             if (grid[row][0].getState() == State.PASS) { //search for PASS cell in first col
-                startX = 0;
-                startY = row;
+                int startX = 0;
+                int startY = row;
+                this.start = new Coordinate(startX, startY); //set start
             }
             if (grid[row][width - 1].getState() == State.PASS) { //seaerch for PASS cell in last col
-                endX = width - 1;
-                endY = row;
+                int endX = width - 1;
+                int endY = row;
+                this.end = new Coordinate(endX, endY); //set end
             }
         }
     }
 
     // Get the start position
     public int getStartX() {
-        return startX;
+        return start.getX();
     }
 
     public int getStartY() {
-        return startY;
+        return start.getY();
     }
 
     // Get the end position
     public int getEndX() {
-        return endX;
+        return end.getX();
     }
 
     public int getEndY() {
-        return endY;
+        return end.getY();
+    }
+
+    public Coordinate getStart() {
+        return start;
+    }
+    public Coordinate getEnd() {
+        return end;
     }
     //get dimensions
     public int getHeight() {
@@ -111,16 +122,16 @@ public class Maze {
     }
     //get end and start coords
     public void setEndY(int Endy){
-        this.endY = Endy;
+        this.end.setY(Endy);
     }
     public void setEndX(int EndX){
-        this.endY = EndX;
+        this.end.setX(EndX);
     }
     public void setStartY(int Starty){
-        this.endY = Starty;
+        this.start.setY(Starty);
     }
     public void setStartX(int StartX){
-        this.endY = StartX;
+        this.start.setX(StartX);
     }
     
     //get grid

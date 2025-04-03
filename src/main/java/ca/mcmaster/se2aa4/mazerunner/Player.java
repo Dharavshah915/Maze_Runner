@@ -24,7 +24,7 @@ public class Player {
     }
 
     public void calculate_path(){ //calculate path using algorithum
-        this.path.pathway = String.join("", this.stratagy.findPath(stratagy.currentDirection)); //convertes array to string
+        this.path.pathway = String.join("", this.stratagy.findPath(stratagy.compass.getCurrentDirection())); //convertes array to string
     }
 
     public void setPath(String path){ // set the path

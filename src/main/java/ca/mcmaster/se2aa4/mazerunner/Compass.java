@@ -2,8 +2,8 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class Compass {
 
-    protected final int[] dy = {-1, 0, 1, 0}; // x-direction change for going forward when facing: North, East, South, West
-    protected final int[] dx = {0, 1, 0, -1}; // x-direction changes for going forward when facing: North, East, South, West
+
+     // x-direction changes for going forward when facing: North, East, South, West
     protected int currentDirection; //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
     public Compass(int startDirection){ //initialize with start direction
         this.currentDirection = startDirection;
@@ -11,4 +11,38 @@ public class Compass {
     public Compass(){ //overlaod constructor to allow comppass intialization without Startdirection pre determined
 
     }
+
+    // private static Compass compass;
+    //  //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
+    // private Compass(int startDirection){ //initialize with start direction
+    //     this.currentDirection = startDirection;
+    // }
+    // public static Compass getInstance(int startDirection){ //get instance of compass
+    //     if(compass == null){ //if compass is not initialized
+    //         compass = new Compass(startDirection); //initialize compass
+    //     }
+    //     return compass; //return compass
+    // }
+    
+    // public Compass(){ //overlaod constructor to allow comppass intialization without Startdirection pre determined
+
+    // }
+
+    //changes
+    public void turnLeft() { //turn left
+        currentDirection = (currentDirection + 3) % 4; //turn left
+    }
+    public void turnRight() { //turn right
+        currentDirection = (currentDirection + 1) % 4; //turn right
+    }
+    public void turnAround() { //turn around
+        currentDirection = (currentDirection + 2) % 4; //turn around
+    }
+    public int getCurrentDirection() { //get current direction
+        return currentDirection; //return current direction
+    }
+    public void setCurrentDirection(int currentDirection) { //set current direction
+        this.currentDirection = currentDirection; //set current direction
+    }
+   
 }

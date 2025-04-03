@@ -3,8 +3,11 @@ package ca.mcmaster.se2aa4.mazerunner;
 public class PathValidation extends Compass {
     Maze maze;
     Path path;
-    protected int currentX, currentY;
-    protected int EndY, EndX;
+    private Coordinate CurrentCoord; 
+    private Coordinate EndCoord;
+    // Assuming Coordinate is a class with a getX() method
+    // protected int currentX, currentY;
+    // protected int EndY, EndX;
 
     public PathValidation(Maze maze, Path path){
         super();
@@ -28,25 +31,25 @@ public class PathValidation extends Compass {
     }
 
     public boolean validateCanonicalPath(int startDirection){//check if canonical path is valid
-        if(startDirection==1){ //if starting from West change End and Current(Start coordinates) as needed
-            this.EndX = maze.getEndX();
-            this.EndY = maze.getEndY();
-            this.currentX = maze.getStartX();
-            this.currentY = maze.getStartY();
-        }else{  //if starting from East change End and Current(Start coordinates) as needed 
-            this.EndX = maze.getStartX();
-            this.EndY = maze.getStartY();
-            this.currentX = maze.getEndX();
-            this.currentY = maze.getEndY();
+       if(startDirection==1){ //if starting from West change End and Current(Start coordinates) as needed
+            this.EndCoord = maze.getEnd();
+            this.CurrentCoord = maze.getStart();
+        }else{ //if starting from East change End and Current(Start coordinates) as needed
+            this.EndCoord = maze.getStart();
+            this.CurrentCoord = maze.getEnd();                             //copied from lag in case of issue
+            // this.EndY = maze.getStartY();
+            // this.currentX = maze.getEndX();
+            // this.currentY = maze.getEndY();
         }
         super.currentDirection = startDirection; //set compass
         for(char dir: path.pathway.trim().toCharArray()){
             switch (dir) {
 
             case 'F': //move forwards
-                currentX += dx[currentDirection]; //add to x and y to move forwards according to direction being faced
-                currentY += dy[currentDirection];
-                if (!MazeUtils.isValidMove(maze,currentX, currentY)){ //if any move is not valid
+                CurrentCoord.move(currentDirection); //update coords
+                // currentX += dx[currentDirection]; //add to x and y to move forwards according to direction being faced
+                // currentY += dy[currentDirection];
+                if (!MazeUtils.isValidMove(maze,CurrentCoord)){ //if any move is not valid
                     return false;
                 }
                 break;
@@ -68,7 +71,7 @@ public class PathValidation extends Compass {
                 return false;
             }
     }
-    return MazeUtils.isSolved(EndX, EndY,currentX, currentY); //check if end coords have been reached at the end
+    return MazeUtils.isSolved(EndCoord, CurrentCoord); //check if end coords have been reached at the end
     }
 
     public boolean validateFactorizedPath(int startDirection){ //check if factorized path is valid

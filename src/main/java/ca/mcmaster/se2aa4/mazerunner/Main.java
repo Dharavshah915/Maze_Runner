@@ -58,7 +58,8 @@ public class Main {
                 cmd = parser.parse(options, args);
                 Maze maze = new Maze(inputFilePath); //initilaize maze
                 // IMPORTANT
-                int startDirection = 1; //change as needed 1 = start from West side, 3 = start from East for side maze solving
+                Compass compass = new Compass(1); //initialize compass
+                // int startDirection = 1; //change as needed 1 = start from West side, 3 = start from East for side maze solving
                 
                 if (cmd.hasOption("p")){ //path is provided and validation of path needs to be performed
                     String route = cmd.getOptionValue("p"); //get route from input
@@ -71,7 +72,7 @@ public class Main {
 
                 }else{
                     Player explorer = new Player(); //initialize player with empty path
-                    Algorithm algorithm = new RHRAlgorithm(maze,startDirection); //choose algorithum of choice and initialize
+                    Algorithm algorithm = new RHRAlgorithm(maze,compass); //choose algorithum of choice and initialize
                     explorer.get_Stratagy(algorithm); //provide algorithum to player
                     explorer.calculate_path(); //calculate path from maze
                     explorer.getPath().CanonicalToFactorized(); //change to factorized form
