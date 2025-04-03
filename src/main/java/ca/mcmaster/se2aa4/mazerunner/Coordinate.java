@@ -52,5 +52,7 @@ public class Coordinate {
         Coordinate other = (Coordinate) obj;
         return this.x == other.x && this.y == other.y;
     }
+
+   
     
 }

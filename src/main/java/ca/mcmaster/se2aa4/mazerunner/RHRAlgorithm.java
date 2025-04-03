@@ -9,8 +9,8 @@ public class RHRAlgorithm extends Algorithm {
     }
 
     @Override
-    public ArrayList<String> findPath(int startDirection) { //overide abstart method
-        ArrayList<String> path = new ArrayList<>();
+    public void findPath(int startDirection) { //overide abstart method
+        //ArrayList<String> pathing = new ArrayList<>();
         if(startDirection==1){ //if starting from West change End and Current(Start coordinates) as needed
             this.EndCoord = maze.getEnd();
             this.CurrentCoord = maze.getStart();
@@ -29,16 +29,18 @@ public class RHRAlgorithm extends Algorithm {
             Coordinate possibleMove = CurrentCoord.checkMove(rightDirection); //calculate possible move
             // int rightX = currentX + dx[rightDirection]; //calculate possible move
             // int rightY = currentY + dy[rightDirection];
-
+            System.out.println("in while");
             if (MazeUtils.isValidMove(maze,possibleMove)) { //try to turn right
-                compass.turnRight(); //update directions
+                System.out.println("Move right");
+                //compass.turnRight(); //update directions
                 CurrentCoord.move(rightDirection); //update coords
                 // currentX = rightX; //update coords
                 // currentY = rightY;
-                path.add(" "); //add instructions in canonical form
-                path.add("R");
-                path.add(" ");
-                path.add("F");
+                //path.add(" "); //add instructions in canonical form
+                //path.add("R");
+                //path.add(" ");
+                //path.add("F");
+                notifyObserversRight();
 
             } else {
                 //direction is not altered if we moce forward
@@ -47,8 +49,12 @@ public class RHRAlgorithm extends Algorithm {
                 // int straightY = currentY + dy[currentDirection];
 
                 if (MazeUtils.isValidMove(maze,possibleMove)) { //try to go forward
-                    CurrentCoord.move(compass.getCurrentDirection()); //update coords
-                    path.add("F"); //add instructions in canonical form
+                    CurrentCoord.move(compass.getCurrentDirection());
+                    System.out.println("forward");
+                    //update coords
+                    // path.add("F"); //add instructions in canonical form
+                    notifyObserversForward();
+                    System.out.println("notifying");
 
                 } else {
 
@@ -58,33 +64,37 @@ public class RHRAlgorithm extends Algorithm {
                     // int leftY = currentY + dy[leftDirection];
 
                     if (MazeUtils.isValidMove(maze,possibleMove)){ //try to turn left
-                        compass.turnLeft(); //update directions
+                        System.out.println("Move left");
+                        //compass.turnLeft(); //update directions
                         // currentDirection = leftDirection; //update directions
                         CurrentCoord.move(leftDirection); //update coords
                         // currentX = leftX; //update coords
                         // currentY = leftY;
-                        path.add(" "); //add instructions in canonical form
-                        path.add("L");
-                        path.add(" ");
-                        path.add("F");
+                        // path.add(" "); //add instructions in canonical form
+                        // path.add("L");
+                        // path.add(" ");
+                        // path.add("F");
+                        notifyObserversLeft();
                     } else{
+                        System.out.println("Move back");
                         int backDirection = (compass.getCurrentDirection() + 2) % 4; // calculate new direction to turn back
-                        CurrentCoord. move(backDirection);
+                        CurrentCoord.move(backDirection);
                         // int backX = currentX + dx[backDirection]; //calculate new move
                         // int backY = currentY + dy[backDirection];
-                        compass.turnAround(); //update directions
-                        //currentDirection = backDirection; //update directions
-                        // currentX = backX; //update coords
-                        // currentY = backY;
-                        path.add(" "); //add instructions in canonical form
-                        path.add("B");
-                        path.add(" ");
-                        path.add("F");
+                        // compass.turnAround(); //update directions
+                        // //currentDirection = backDirection; //update directions
+                        // // currentX = backX; //update coords
+                        // // currentY = backY;
+                        // path.add(" "); //add instructions in canonical form
+                        // path.add("B");
+                        // path.add(" ");
+                        // path.add("F");
+                        notifyObserversBackward();
                     }
 
                 }
             }
         }
-        return path;
+
     }
 }

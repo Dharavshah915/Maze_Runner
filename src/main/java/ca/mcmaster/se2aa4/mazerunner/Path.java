@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-public class Path {
+public class Path  {
     String pathway; //path represented using
     public static Path instance; //singleton instance
    
@@ -67,6 +67,32 @@ public class Path {
 
     public void setPath(String path){ //set path
         this.pathway = path;
+    }
+
+
+
+    public void MoveRight(){
+        this.add(" "); //add instructions in canonical form
+        this.add("R");
+        this.add(" ");
+        this.add("F");
+    }
+
+    public void MoveLeft(){
+        this.add(" "); //add instructions in canonical form
+        this.add("L");
+        this.add(" ");
+        this.add("F");
+    }
+    public void MoveForward(){
+        System.out.println("in player path");
+        this.add("F"); //add instructions in canonical form
+    }
+    public void MoveBackward(){
+        this.add(" "); //add instructions in canonical form
+        this.add("B");
+        this.add(" ");
+        this.add("F"); //add instructions in canonical form
     }
 
 

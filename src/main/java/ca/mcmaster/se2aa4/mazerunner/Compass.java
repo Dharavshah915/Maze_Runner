@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-public class Compass {
+public class Compass implements Observer{
 
 
      // x-direction changes for going forward when facing: North, East, South, West
@@ -12,13 +12,21 @@ public class Compass {
 
     // }
 
-    private static Compass compass = new Compass(); //initialize compass with default direction
+    private static Compass compass; //initialize compass with default direction
      //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
-    private Compass(){ //initialize with start direction
-        
+    private Compass() { // private constructor without attaching
+        // Constructor logic (if any) goes here
     }
-    public static Compass getInstance(){ //get instance of compass
-        if(compass == null){ //if compass is not initialized
+    public static Compass getInstance(Algorithm algorithm) { //get instance of compass
+        if (compass == null) { //if compass is not initialized
+            compass = new Compass(); //initialize compass
+            algorithm.attach(compass); //attach algorithm to compass after initialization
+        }
+        return compass; //return compass
+    }
+
+    public static Compass getInstance() { //get instance of compass
+        if (compass == null) { //if compass is not initialized
             compass = new Compass(); //initialize compass
         }
         return compass; //return compass
@@ -43,6 +51,25 @@ public class Compass {
     }
     public void setCurrentDirection(int currentDirection) { //set current direction
         this.currentDirection = currentDirection; //set current direction
+    }
+    @Override
+    public void updateMoveRight() {
+       
+        this.turnRight();
+    }
+    @Override
+    public void updateMoveLeft() {
+      
+        this.turnLeft();
+    }
+    @Override
+    public void updateMoveForward() {
+    
+    }
+    @Override
+    public void updateMoveBackward() {
+      
+        this.turnAround();
     }
    
 }

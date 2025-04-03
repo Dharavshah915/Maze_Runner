@@ -61,8 +61,10 @@ public class Main {
                 Compass compass = Compass.getInstance(); //initialize compass
                 compass.setCurrentDirection(1); //set compass direction to 1 (West) by default
                 // int startDirection = 1; //change as needed 1 = start from West side, 3 = start from East for side maze solving
+                System.out.println("hete");
                 
-                if (cmd.hasOption("p")){ //path is provided and validation of path needs to be performed
+                if (cmd.hasOption("p")){ 
+                    System.out.println("fssfs");//path is provided and validation of path needs to be performed
                     String route = cmd.getOptionValue("p"); //get route from input
                     Path path = Path.getInstance(); //get instance of path
                     path.setPath(route); //set path
@@ -75,11 +77,20 @@ public class Main {
                     System.out.println(isCorrectPathFromLeft || isCorrectPathFromRight ? "That is a valid path" : "That path is not valid");
 
                 }else{
-                    Player explorer = Player.getInstance(); //initialize player with empty path
+                     //initialize player with empty path
                     Algorithm algorithm = new RHRAlgorithm(maze,compass); //choose algorithum of choice and initialize
-                    explorer.get_Stratagy(algorithm); //provide algorithum to player
+                    Player explorer = Player.getInstance(algorithm);
+                    System.out.println("1");
+                    algorithm.attach(compass);
+                    System.out.println("2");
+                    //explorer.get_Stratagy(algorithm); //provide algorithum to player
                     explorer.calculate_path(); //calculate path from maze
+                    System.out.println("3");
+                    System.out.println(explorer.getPath()); //output
+                    System.out.println("path above");
                     explorer.getPath().CanonicalToFactorized(); //change to factorized form
+                    System.out.println("4");
+                    System.out.println("safsaf");
                     System.out.println(explorer.getPath()); //output
                     
                 }
