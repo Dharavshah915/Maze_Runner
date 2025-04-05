@@ -3,16 +3,16 @@ package ca.mcmaster.se2aa4.mazerunner;
 public class PathValidation {
     Maze maze;
     Path path;
-    private Coordinate CurrentCoord; 
-    private Coordinate EndCoord;
-    private Compass compass;
+    private Coordinate CurrentCoord; //current Poisiton
+    private Coordinate EndCoord; //end position
+    private Compass compass; //compass
     private static PathValidation instance; //singleton instance
-    // Assuming Coordinate is a class with a getX() method
-    // protected int currentX, currentY;
-    // protected int EndY, EndX;
+
 
     private PathValidation(){
         this.compass = Compass.getInstance(); //initialize compass
+        this.path = Path.getInstance(); //initialize path
+        this.maze = Maze.getInstance(); //initialize maze
     }
 
     public static PathValidation getInstance(){ //get instance of path validation
@@ -22,9 +22,8 @@ public class PathValidation {
         return instance; //return instance
     }
 
-    public void setMazeAndPath(Maze maze, Path path){ //set maze and path
-        this.maze = maze; //set maze
-        this.path = path; //set path
+    public void setPath(String path){ //set path to validate
+        this.path.setPath(path); 
     }
     
 
@@ -49,36 +48,32 @@ public class PathValidation {
             this.CurrentCoord = maze.getStart();
         }else{ //if starting from East change End and Current(Start coordinates) as needed
             this.EndCoord = maze.getStart();
-            this.CurrentCoord = maze.getEnd();                             //copied from lag in case of issue
-            // this.EndY = maze.getStartY();
-            // this.currentX = maze.getEndX();
-            // this.currentY = maze.getEndY();
+            this.CurrentCoord = maze.getEnd();    
+      
         }
         compass.setCurrentDirection(startDirection); //set compass
-        //super.currentDirection = startDirection; //set compass
+      
         for(char dir: path.pathway.trim().toCharArray()){
             switch (dir) {
 
             case 'F': //move forwards
                 CurrentCoord.move(compass.getCurrentDirection()); //update coords
-                // currentX += dx[currentDirection]; //add to x and y to move forwards according to direction being faced
-                // currentY += dy[currentDirection];
                 if (!MazeUtils.isValidMove(maze,CurrentCoord)){ //if any move is not valid
                     return false;
                 }
                 break;
-            //change direction if R, B, or, L encountered
+ 
             case 'R': //turn right
                 compass.turnRight(); //update direction
-                //currentDirection = (currentDirection + 1) % 4; 
+         
                 break;
             case 'B': //turn back
                 compass.turnAround();
-                //currentDirection = (currentDirection + 2) % 4;
+           
                 break;
             case 'L': //turn left
                 compass.turnLeft(); //update direction
-                //currentDirection = (currentDirection + 3) % 4;
+         
                 break;
             //if there is a space continue
             case ' ':

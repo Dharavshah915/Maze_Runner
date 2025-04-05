@@ -1,7 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.time.chrono.ThaiBuddhistChronology;
-
 public class Player implements  Observer {
     private Path path; 
     private Algorithm stratagy; //algorithum to develop path 
@@ -13,48 +11,31 @@ public class Player implements  Observer {
     public static Player getInstance(Algorithm algorithm) { //get instance of player
         if(instance == null){ //if instance is not initialized
             instance = new Player(algorithm); //initialize instance
-            algorithm.attach(instance);
+            
         }
         instance.get_Stratagy(algorithm);
+        algorithm.attach(instance);
         return instance; //return instance
     }
-
-    public static Player getInstance() { //get instance of player
-        if(instance == null){ //if instance is not initialized
-            instance = new Player(null); //initialize instance
-        }
-        return instance; //return instance
-    }
-    //Overloading
-
-    // public Player(Path path){ //intialize with given Path object
-    //     this.path = path;
-    // }
-
-    // public Player(String path){ //intialize with Path represented as String
-    //     this.path = new Path(path);
-    // }
-
 
     public void get_Stratagy(Algorithm algorithm){ //get algorithum
         this.stratagy = algorithm;
     }
 
     public void calculate_path(){ //calculate path using algorithum
-        stratagy.findPath(stratagy.compass.getCurrentDirection());
-        //this.path.pathway = String.join("", this.stratagy.findPath(stratagy.compass.getCurrentDirection())); //convertes array to string
-        System.out.println("THe path is " + this.path.pathway + this.getPath());
+        stratagy.findPath();
     }
 
     public void setPath(String path){ // set the path
         this.path.pathway = path;
     }
 
-    public Path getPath(){
+    public Path getPath(){ //get the path
         return this.path;
     }
+    //update path
     @Override
-    public void updateMoveRight() {
+    public void updateMoveRight() { 
       
         this.path.MoveRight();
     }
@@ -65,14 +46,17 @@ public class Player implements  Observer {
     }
     @Override
     public void updateMoveForward() {
-        System.out.println("In pLAYER");
+       
         this.path.MoveForward();
-        System.out.println(this.getPath());
-        System.out.println(path.toString());
+      
     }
     @Override
     public void updateMoveBackward() {
      
         this.path.MoveBackward();
+    }
+    //reset path
+    public void reset(){
+        this.path.reset();
     }
 }

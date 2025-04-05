@@ -55,44 +55,28 @@ public class Main {
 
             logger.info("**** Computing path");
             try {
+                int startDirection = 1; //change as needed 1 = start from West side, 3 = start from East for maze solving
+                Compass compass = Compass.getInstance();
+                compass.setCurrentDirection(startDirection); //set compass
                 cmd = parser.parse(options, args);
-                Maze maze = Maze.getInstance(inputFilePath); //initilaize maze
-                // IMPORTANT
-                Compass compass = Compass.getInstance(); //initialize compass
-                compass.setCurrentDirection(1); //set compass direction to 1 (West) by default
-                // int startDirection = 1; //change as needed 1 = start from West side, 3 = start from East for side maze solving
-                System.out.println("hete");
+                Maze maze = Maze.getInstance(); //initilaize maze
+                maze.load_info(inputFilePath);
+ 
                 
                 if (cmd.hasOption("p")){ 
-                    System.out.println("fssfs");//path is provided and validation of path needs to be performed
                     String route = cmd.getOptionValue("p"); //get route from input
-                    Path path = Path.getInstance(); //get instance of path
-                    path.setPath(route); //set path
-                   // Path path = new Path(route); //initialize path
-                    Player explorer = Player.getInstance(); //initalize player with path
                     PathValidation validator = PathValidation.getInstance(); //Initilize path validiator
-                    validator.setMazeAndPath(maze, path); //set maze and path for validation
+                    validator.setPath(route); //set maze and path for validation
                     boolean isCorrectPathFromRight = validator.validatePath(1); //check if path is valid from left side
                     boolean isCorrectPathFromLeft = validator.validateCanonicalPath(3); //chekc if path is valid from right side
                     System.out.println(isCorrectPathFromLeft || isCorrectPathFromRight ? "That is a valid path" : "That path is not valid");
 
                 }else{
-                     //initialize player with empty path
                     Algorithm algorithm = new RHRAlgorithm(maze,compass); //choose algorithum of choice and initialize
                     Player explorer = Player.getInstance(algorithm);
-                    System.out.println("1");
-                    algorithm.attach(compass);
-                    System.out.println("2");
-                    //explorer.get_Stratagy(algorithm); //provide algorithum to player
                     explorer.calculate_path(); //calculate path from maze
-                    System.out.println("3");
-                    System.out.println(explorer.getPath()); //output
-                    System.out.println("path above");
                     explorer.getPath().CanonicalToFactorized(); //change to factorized form
-                    System.out.println("4");
-                    System.out.println("safsaf");
                     System.out.println(explorer.getPath()); //output
-                    
                 }
             
             } catch (Exception e) {

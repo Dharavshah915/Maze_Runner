@@ -16,10 +16,6 @@ public class Path  {
         return instance; //return instance
     }
 
-    // public Path(){  // overloadng to allow no initial path
-    //   this.pathway = "";
-    // }
-
     public void add(String str){ //add to path
         this.pathway += str;
     }
@@ -85,7 +81,7 @@ public class Path  {
         this.add("F");
     }
     public void MoveForward(){
-        System.out.println("in player path");
+       
         this.add("F"); //add instructions in canonical form
     }
     public void MoveBackward(){
@@ -93,6 +89,9 @@ public class Path  {
         this.add("B");
         this.add(" ");
         this.add("F"); //add instructions in canonical form
+    }
+    public void reset(){  //reset path
+        this.pathway = "";
     }
 
 

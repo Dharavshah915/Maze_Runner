@@ -13,42 +13,20 @@ public class Maze {
     private int height = 0;  // Maze height (number of rows)
     private Coordinate start; // Starting coordinate
     private Coordinate end;   // Ending coordinate
-    // private int startX;      // Starting point X-coordinate
-    // private int startY;      // Starting point Y-coordinate
-    // private int endX;        // Ending point X-coordinate
-    // private int endY;        // Ending point Y-coordinate
-
-  // private static Compass compass;
-    //  //current direction we are facing (0:North, 1:East, 2:South, 3:Right)
-    // private Compass(int startDirection){ //initialize with start direction
-    //     this.currentDirection = startDirection;
-    // }
-    // public static Compass getInstance(int startDirection){ //get instance of compass
-    //     if(compass == null){ //if compass is not initialized
-    //         compass = new Compass(startDirection); //initialize compass
-    //     }
-    //     return compass; //return compass
-    // }
-    
-    // public Compass(){ //overlaod constructor to allow comppass intialization without Startdirection pre determined
-
-    // }
-    private static Maze maze;
-
-    private Maze(String filePath) { //initliaze maze using file
-        load_info(filePath);
-    }
-
-    public static Maze getInstance(String filePath) { //get instance of maze
-        if (maze == null) { //if maze is not initialized
-            maze = new Maze(filePath); //initialize maze
-        }
-        return maze; //return maze
-    }
   
+    private static Maze instance;
 
-    
-    private void load_info(String filePath) { // Loads the maze from a file
+    private Maze() { //initliaze maze using file
+    }
+
+    public static Maze getInstance() { //get instance of maze
+        if (instance == null) { //if maze is not initialized
+            instance = new Maze(); //initialize maze
+        }
+        return instance; //return maze
+    }
+
+    public void load_info(String filePath) { // Loads the maze from a file
         try {
             get_dimensions(filePath);  // Get dimensions first
             grid = new Cell[height][width];  // Initialize the grid with the correct size
@@ -122,6 +100,10 @@ public class Maze {
         return start.getY();
     }
 
+    public Coordinate getStart() {
+        return start;
+    }
+
     // Get the end position
     public int getEndX() {
         return end.getX();
@@ -131,9 +113,6 @@ public class Maze {
         return end.getY();
     }
 
-    public Coordinate getStart() {
-        return start;
-    }
     public Coordinate getEnd() {
         return end;
     }
@@ -157,6 +136,18 @@ public class Maze {
     }
     public void setStartX(int StartX){
         this.start.setX(StartX);
+    }
+    public void SwapStartEnd(){ //swap start and end coordinates
+        Coordinate temp = this.start;
+        this.start = this.end;
+        this.end = temp;
+    }
+    public void reset() { //reset the maze
+        this.height = 0;
+        this.width = 0;
+        this.grid = new Cell[height][width]; 
+        this.start = null;
+        this.end = null;
     }
     
     //get grid
