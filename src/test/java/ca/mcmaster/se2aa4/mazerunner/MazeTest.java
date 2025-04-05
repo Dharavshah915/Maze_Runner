@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 public class MazeTest {
     @Test
-    public void mazeInitTest(){  //use //spit up ifmore needed
+    public void mazeInitTest(){ 
         String inputFilePath = "./examples/regular.maz.txt";
         Maze maze = Maze.getInstance();
         maze.reset();//reset incase singleton instance was initialized elsewhere

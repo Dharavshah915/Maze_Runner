@@ -20,7 +20,7 @@ public class PathTest {
         Compass compass = Compass.getInstance();
         Algorithm algorithm = new RHRAlgorithm(maze, compass);
         Player explorer = Player.getInstance(algorithm);
-        explorer.reset();
+        explorer.reset(); //reset explorer incase of previous instances still existing
         algorithm.notifyObserversBackward();
         Assertions.assertEquals(" B F", explorer.getPath().toString());
        
@@ -32,7 +32,7 @@ public class PathTest {
         Compass compass = Compass.getInstance();
         Algorithm algorithm = new RHRAlgorithm(maze, compass);
         Player explorer = Player.getInstance(algorithm);
-        explorer.reset();
+        explorer.reset(); //reset explorer incase of previous instances still existing
         algorithm.notifyObserversForward();
         Assertions.assertEquals("F", explorer.getPath().toString());
        
@@ -44,7 +44,7 @@ public class PathTest {
         compass.setCurrentDirection(1);
         Algorithm algorithm = new RHRAlgorithm(maze, compass);
         Player explorer = Player.getInstance(algorithm);
-        explorer.reset();
+        explorer.reset(); //reset explorer incase of previous instances still existing
         algorithm.notifyObserversRight();
 
         Assertions.assertEquals(" R F", explorer.getPath().toString());
@@ -56,7 +56,7 @@ public class PathTest {
         Compass compass = Compass.getInstance();
         Algorithm algorithm = new RHRAlgorithm(maze, compass);
         Player explorer = Player.getInstance(algorithm);
-        explorer.reset();
+        explorer.reset(); //reset explorer incase of previous instances still existing
         algorithm.notifyObserversLeft();
         Assertions.assertEquals(" L F", explorer.getPath().toString());
        
@@ -73,7 +73,7 @@ public class PathTest {
         compass.setCurrentDirection(1);
         Algorithm algorithm = new RHRAlgorithm(maze,compass);
         Player explorer = Player.getInstance(algorithm); //initialize player with empty path
-        explorer.reset();
+        explorer.reset(); //reset explorer incase of previous instances still existing
         explorer.get_Stratagy(algorithm); //provide algorithum to player
         explorer.calculate_path(); //calculate path from maze
         explorer.getPath();
