@@ -12,13 +12,6 @@ public class Compass implements Observer{
     private Compass() { // private constructor without attaching
       
     }
-    public static Compass getInstance(Algorithm algorithm) { //get instance of compass
-        if (compass == null) { //if compass is not initialized
-            compass = new Compass(); //initialize compass
-            //algorithm.attach(compass); //attach algorithm to compass after initialization
-        }
-        return compass; //return compass
-    }
 
     public static Compass getInstance() { //get instance of compass wih
         if (compass == null) { //if compass is not initialized
